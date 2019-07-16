@@ -16,10 +16,15 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 // import '@fortawesome/fontawesome-free/css/all.css' // Ensure you are using css-loader
 import 'vuetify/dist/vuetify.min.css'
 
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import lang from 'element-ui/lib/locale/lang/en'
+import locale from 'element-ui/lib/locale'
 // import VueCarousel from 'vue-carousel';
 import VueLazyload from 'vue-lazyload'
 // import JsonExcel from 'vue-json-excel'
 import CKEditor from '@ckeditor/ckeditor5-vue';
+Vue.use(ElementUI, { locale });
 
 Vue.use(VueLazyload)
 // Vue.use(VueCarousel);

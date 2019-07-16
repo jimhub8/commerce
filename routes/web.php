@@ -113,6 +113,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('coupons', 'CouponController');
     Route::resource('sizes', 'SizeController');
     Route::resource('images', 'ProductimgController');
+    Route::resource('variants', 'VariantController');
     Route::resource('sales', 'SaleController');
 
     Route::get('/logoutOther', 'UserController@logoutOther')->name('logoutOther');

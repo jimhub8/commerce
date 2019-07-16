@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->string('website')->nullable();
             $table->string('address')->nullable();
             $table->string('profile')->default('/storage/profile/noimage.png');
+            $table->timestamp('last_login_at')->nullable();
+            $table->string('last_login_ip')->nullable();
             $table->string('password');
 			$table->softDeletes();
             $table->rememberToken();

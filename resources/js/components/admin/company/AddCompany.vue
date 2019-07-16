@@ -12,30 +12,42 @@
                             <v-container grid-list-xl fluid>
                                 <v-layout wrap>
                                     <v-flex xs12 sm6>
-                                        <v-text-field v-model="form.company_name" :rules="rules.name" color="blue darken-2" label="Company name" required></v-text-field>
+                                        <v-text-field v-model="form.company_name" color="blue darken-2" label="Company name" required></v-text-field>
                                         <small class="has-text-danger" v-if="errors.company_name">{{ errors.company_name[0] }}</small>
                                     </v-flex>
                                     <v-flex xs12 sm6>
-                                        <v-text-field v-model="form.address" :rules="rules.name" color="blue darken-2" label="Company Address" required></v-text-field>
+                                        <v-text-field v-model="form.address" color="blue darken-2" label="Company Address" required></v-text-field>
                                         <small class="has-text-danger" v-if="errors.address">{{ errors.address[0] }}</small>
                                     </v-flex>
                                     <v-flex xs12 sm6>
-                                        <v-text-field v-model="form.phone" :rules="rules.name" color="blue darken-2" label="Telephone Number" required></v-text-field>
+                                        <v-text-field v-model="form.phone" color="blue darken-2" label="Telephone Number" required></v-text-field>
                                         <small class="has-text-danger" v-if="errors.phone">{{ errors.phone[0] }}</small>
                                     </v-flex>
                                     <v-flex xs12 sm6>
-                                        <v-text-field v-model="form.email" :rules="rules.name" color="blue darken-2" label="Company Email" required></v-text-field>
+                                        <v-text-field v-model="form.email" color="blue darken-2" label="Company Email" required></v-text-field>
                                         <small class="has-text-danger" v-if="errors.email">{{ errors.email[0] }}</small>
                                     </v-flex>
                                     <v-flex xs12 sm6>
-                                        <v-text-field v-model="form.website" :rules="rules.name" color="blue darken-2" label="Company Website" required></v-text-field>
+                                        <v-text-field v-model="form.country" color="blue darken-2" label="Country" required></v-text-field>
+                                        <small class="has-text-danger" v-if="errors.country">{{ errors.country[0] }}</small>
+                                    </v-flex>
+                                    <v-flex xs12 sm6>
+                                        <v-text-field v-model="form.city" color="blue darken-2" label="City/Street/Town" required></v-text-field>
+                                        <small class="has-text-danger" v-if="errors.city">{{ errors.city[0] }}</small>
+                                    </v-flex>
+                                    <v-flex xs12 sm6>
+                                        <v-text-field v-model="form.country" color="blue darken-2" label="Company country" required></v-text-field>
+                                        <small class="has-text-danger" v-if="errors.country">{{ errors.country[0] }}</small>
+                                    </v-flex>
+
+                                    <v-flex xs12 sm6>
+                                        <v-text-field v-model="form.website" color="blue darken-2" label="Company Website" required></v-text-field>
                                         <small class="has-text-danger" v-if="errors.website">{{ errors.website[0] }}</small>
                                     </v-flex>
                                 </v-layout>
-
                                 <v-card>
                                     <v-divider></v-divider>
-                                    <v-btn color="red" darken-1 raised @click="onPickFile" style="color: #fff;">Upload</v-btn>
+                                    <v-btn color="red" darken-1 raised @click="onPickFile" style="color: #fff;">Upload Logo</v-btn>
                                     <input type="file" @change="Getimage" accept="image/*" style="display: none" ref="fileInput">
                                     <img v-show="imagePlaced" :src="avatar" style="width: 200px; height: 200px;">
                                     <!-- <v-btn @click="upload" flat v-show="imagePlaced" :loading="loading" :disabled="loading">Upload</v-btn>

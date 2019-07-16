@@ -17,6 +17,7 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('company_id');
+            $table->integer('variant_id')->nullable();
             $table->integer('brand_id');
             $table->integer('subCategory_id');
             $table->integer('category_id');
@@ -24,11 +25,16 @@ class CreateProductsTable extends Migration
             $table->integer('quantity');
             $table->integer('price');
             $table->integer('list_price')->nullable();
+            $table->integer('retail_price')->nullable();
+            $table->integer('whole_price')->nullable();
             $table->boolean('featured')->default(0);
             $table->boolean('best_sell')->default(0);
             $table->boolean('new_product')->default(0);
             $table->text('description')->nullable();
             $table->string('image')->nullable();
+            $table->string('tags')->nullable();
+            $table->string('sku_no')->nullable();
+            $table->string('initial_stock')->nullable();
             $table->boolean('carousel')->default(0);
             $table->text('details')->nullable();
 			$table->softDeletes();
