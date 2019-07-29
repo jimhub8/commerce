@@ -7,24 +7,40 @@
                     <v-container grid-list-xl fluid>
                         <v-layout wrap>
                             <v-flex xs12 sm6>
-                                <v-text-field v-model="account.company_name" color="blue darken-2" label="Company name" required></v-text-field>
+                                <v-text-field v-model="account.company_name" color="blue darken-2" label="Legal Name / Company Name" required></v-text-field>
                                 <small class="has-text-danger" v-if="errors.company_name">{{ errors.company_name[0] }}</small>
                             </v-flex>
                             <v-flex xs12 sm6>
-                                <v-text-field v-model="account.address" color="blue darken-2" label="Company Address" required></v-text-field>
-                                <small class="has-text-danger" v-if="errors.address">{{ errors.address[0] }}</small>
+                                <v-text-field v-model="account.company_address" color="blue darken-2" label="Company Address" required></v-text-field>
+                                <small class="has-text-danger" v-if="errors.company_address">{{ errors.company_address[0] }}</small>
                             </v-flex>
                             <v-flex xs12 sm6>
-                                <v-text-field v-model="account.phone" color="blue darken-2" label="Telephone Number" required></v-text-field>
-                                <small class="has-text-danger" v-if="errors.phone">{{ errors.phone[0] }}</small>
+                                <v-text-field v-model="account.address_2" color="blue darken-2" label="Company Address 2" required></v-text-field>
+                                <small class="has-text-danger" v-if="errors.address_2">{{ errors.address_2[0] }}</small>
                             </v-flex>
                             <v-flex xs12 sm6>
-                                <v-text-field v-model="account.email" color="blue darken-2" label="Company Email" required></v-text-field>
-                                <small class="has-text-danger" v-if="errors.email">{{ errors.email[0] }}</small>
+                                <v-text-field v-model="account.company_phone" color="blue darken-2" label="Telephone Number" required></v-text-field>
+                                <small class="has-text-danger" v-if="errors.company_phone">{{ errors.company_phone[0] }}</small>
                             </v-flex>
                             <v-flex xs12 sm6>
-                                <v-text-field v-model="account.website" color="blue darken-2" label="Company Website" required></v-text-field>
-                                <small class="has-text-danger" v-if="errors.website">{{ errors.website[0] }}</small>
+                                <v-text-field v-model="account.company_email" color="blue darken-2" label="Company Email" required></v-text-field>
+                                <small class="has-text-danger" v-if="errors.company_email">{{ errors.company_email[0] }}</small>
+                            </v-flex>
+                            <v-flex xs12 sm6>
+                                <v-text-field v-model="account.company_website" color="blue darken-2" label="Company Website" required></v-text-field>
+                                <small class="has-text-danger" v-if="errors.company_website">{{ errors.company_website[0] }}</small>
+                            </v-flex>
+                            <v-flex xs12 sm6>
+                                <v-text-field v-model="account.postal_code" color="blue darken-2" label="Company postal_code" required></v-text-field>
+                                <small class="has-text-danger" v-if="errors.postal_code">{{ errors.postal_code[0] }}</small>
+                            </v-flex>
+                            <v-flex xs12 sm6>
+                                <v-text-field v-model="account.company_businessno" color="blue darken-2" label="Business Registration No." required></v-text-field>
+                                <small class="has-text-danger" v-if="errors.company_businessno">{{ errors.company_businessno[0] }}</small>
+                            </v-flex>
+                            <v-flex xs12 sm6>
+                                <v-text-field v-model="account.location" color="blue darken-2" label="Plaza/Mall" required></v-text-field>
+                                <small class="has-text-danger" v-if="errors.location">{{ errors.location[0] }}</small>
                             </v-flex>
                         </v-layout>
 
@@ -83,7 +99,7 @@ export default {
                 })
                 .catch((error) => {
                     eventBus.$emit('errorEvent', 'Please confirm if all fields are filled')
-                    
+
                     this.errors = error.response.data.errors
                 })
         },

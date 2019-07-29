@@ -12,7 +12,7 @@
         <v-container fluid fill-height v-show="!loader">
             <v-layout justify-center align-center>
                 <!-- <v-btn @click="openAdd" color="primary">Add A Branch</v-btn> -->
-                <div v-show="!loader">
+                <div v-show="!loader" style="width: 100%;">
                     <v-card-title>
                         Companies
                         <v-btn color="primary" flat raised @click="openAdd">Add Company</v-btn>
@@ -23,14 +23,19 @@
                         <v-spacer></v-spacer>
                         <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
                     </v-card-title>
+
                     <v-data-table :headers="headers" :items="AllCompanies" :loading="loading" class="elevation-1" :search="search">
                         <v-progress-linear v-slot:progress color="blue" indeterminate></v-progress-linear>
                         <template slot="items" slot-scope="props">
                             <td>{{ props.item.company_name }}</td>
-                            <td class="text-xs-right">{{ props.item.phone }}</td>
-                            <td class="text-xs-right">{{ props.item.email }}</td>
-                            <td class="text-xs-right">{{ props.item.address }}</td>
-                            <td class="text-xs-right"><a :href="props.item.website" target="_blank" rel="noopener noreferrer">{{ props.item.website }}</a></td>
+                            <td class="text-xs-right">{{ props.item.company_phone }}</td>
+                            <td class="text-xs-right">{{ props.item.company_email }}</td>
+                            <td class="text-xs-right">{{ props.item.company_address }}</td>
+                            <td class="text-xs-right"><a :href="props.item.company_website" target="_blank" rel="noopener noreferrer">{{ props.item.company_website }}</a></td>
+                            <td class="text-xs-right">{{ props.item.bank }}</td>
+                            <td class="text-xs-right">{{ props.item.location }}</td>
+                            <td class="text-xs-right">{{ props.item.account_no }}</td>
+                            <td class="text-xs-right">{{ props.item.account_name }}</td>
                             <td class="text-xs-right" v-if="props.item.active === '1' || props.item.active === 1">
                                 Active
                                 <v-tooltip bottom>
@@ -122,19 +127,35 @@ export default {
                 },
                 {
                     text: "Telephone Number",
-                    value: "phone"
+                    value: "company_phone"
                 },
                 {
                     text: "Email",
-                    value: "email"
+                    value: "company_email"
                 },
                 {
                     text: "Address",
-                    value: "address"
+                    value: "company_address"
                 },
                 {
                     text: "Website",
-                    value: "website"
+                    value: "company_website"
+                },
+                {
+                    text: "Bank",
+                    value: "bank"
+                },
+                {
+                    text: "Plaza/Mall",
+                    value: "location"
+                },
+                {
+                    text: "Account No",
+                    value: "account_no"
+                },
+                {
+                    text: "Account Name",
+                    value: "account_name"
                 },
                 {
                     text: "Active",
@@ -212,7 +233,7 @@ export default {
         },
 
         activate(id, data) {
-                    this.loading = true;
+            this.loading = true;
             axios
                 .post(`/company_activate/${id}`, data)
                 .then(response => {
@@ -238,7 +259,7 @@ export default {
         },
 
         getCompany() {
-                    this.loading = true;
+            this.loading = true;
             axios
                 .get("/companies")
                 .then(response => {

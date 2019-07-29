@@ -24,6 +24,13 @@ import locale from 'element-ui/lib/locale'
 import VueLazyload from 'vue-lazyload'
 // import JsonExcel from 'vue-json-excel'
 import CKEditor from '@ckeditor/ckeditor5-vue';
+import VueGoodTablePlugin from 'vue-good-table';
+
+// import the styles
+import 'vue-good-table/dist/vue-good-table.css'
+import StoreData from './store/store'
+
+Vue.use(VueGoodTablePlugin);
 Vue.use(ElementUI, { locale });
 
 Vue.use(VueLazyload)
@@ -45,6 +52,9 @@ Vue.use(VueScrollTo, {
 })
 // Vue.component('downloadExcel', JsonExcel)
 Vue.use(CKEditor);
+import Vuex from 'vuex'
+Vue.use(Vuex)
+const store = new Vuex.Store(StoreData)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -63,10 +73,11 @@ import myRegister from './components/register/Register.vue';
 import myFooter from './components/include/Footer.vue';
 import myNav from './components/include/Headervue.vue';
 import myProduct from './components/product/Sliders.vue';
+import myAdmProduct from './components/products/Product';
 import myHome from './components/home/Home.1.vue';
 import productDetail from './components/Shop/Details';
 import myShow from './components/home/Show.vue';
-import myslider from './components/product/Sliders.vue';
+// import myslider from './components/product/Sliders.vue';
 import myShop from './components/Shop/Shop.vue';
 import myCartHome from './components/cart/CartHome.vue';
 import myAbout from './components/about/About.vue';
@@ -97,9 +108,15 @@ import myAdminSize from './components/admin/size/Size.vue';
 import myReports from './components/admin/reports/Reports.vue';
 import myAccount from './components/admin/client/Client.vue';
 
+import myGroup from './components/group/Groups'
+import myGroupShow from './components/group/Product'
+import myGroupCreate from './components/group/Create'
+import myGroupEdit from './components/group/Edit'
 
 // Clients
 import myClientOrders from './components/clients/Orders';
+
+import editProduct from './components/products/Edit.vue'
 
 
 const routes = [
@@ -107,7 +124,6 @@ const routes = [
 
     { path: '/', component: myHome },
     { path: '/filter', component: myFilter },
-    { path: '/products', component: myProduct },
     { path: '/prescriptions', component: myPrescription },
     { path: '/roles', component: myRole },
     { path: '/users', component: myUsers },
@@ -126,7 +142,7 @@ const routes = [
 
     // Admin
     { path: '/dashboard', component: myDash },
-    { path: '/Adminproducts', component: myPro },
+    // { path: '/Adminproducts', component: myPro },
     { path: '/AdminMenu', component: myMenu },
     { path: '/Admincategories', component: myCategory },
     { path: '/AdminSubCat', component: mySubCat },
@@ -144,6 +160,15 @@ const routes = [
     // Clients
     { path: '/myOrders', component: myClientOrders },
 
+    { path: '/Adminproducts', component: myAdmProduct },
+    { path: '/products/:id', component: editProduct, name: 'editProducts' },
+
+
+
+    { path: '/groups', component: myGroup },
+    { path: '/groups/:id', component: myGroupShow, name: 'groupShow' },
+    { path: '/groupCreate', component: myGroupCreate, name: 'groupCreate' },
+    { path: '/groupEdit', component: myGroupEdit, name: 'groupEdit' },
 ]
 const router = new VueRouter({
     // mode: 'history',
@@ -151,13 +176,16 @@ const router = new VueRouter({
 })
 const app = new Vue({
     el: '#app',
+    store,
     router,
     components: {
         myProduct, myNav, myHome, myPro, myPrescription, myHeader, myFooter, myunauth,
-        myPayment, myShow, myslider, myDash, myCategory, myOrders, myShop, myCartHome,
+        myPayment, myShow, myDash, myCategory, myOrders, myShop, myCartHome,
         myAdminAbout, myAbout, mywishList,myUsers, myRole, CategoryFilter, myAdminCoupon,
         myNavmenu, myAdminSize, myReports, myApi, myAccount, myRegister, myClientOrders,
         myProfile, productDetail, SearchP, myAdminInvoice,myAdminCompany, myMenu, myThanks,
+        myAdmProduct, editProduct, myGroup, myGroupCreate, myGroupShow, myGroupEdit
+        // myslider
 
     },
 });

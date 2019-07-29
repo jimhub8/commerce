@@ -18,7 +18,7 @@
                     <div class="slick3">
                         <div class="item-slick3">
                             <div class="wrap-pic-w">
-                                <img :src="products.image" :alt="products.name">
+                                <img :src="products.image" :alt="products.product_name">
                                 <div class="text-xs-center">
                                     <v-rating v-model="avgRating" readonly half-increments></v-rating>
                                 </div>
@@ -30,7 +30,7 @@
 
             <div class="w-size14 p-t-30 respon5">
                 <h4 class="product-detail-name m-text16 p-b-13">
-                    {{ products.name }}
+                    {{ products.product_name }}
                 </h4>
 
                 <span class="m-text17">
@@ -45,7 +45,7 @@
                 <!--  -->
                 <div class="p-t-33 p-b-60">
 
-                    <div class="flex-m flex-w" v-if="sizes.length > 0">
+                    <!-- <div class="flex-m flex-w" v-if="sizes.length > 0">
                         <div class="s-text15 w-size15 t-center">
                             Size
                         </div>
@@ -56,7 +56,7 @@
                               <option v-for="size in sizes" :key="size.id">{{ size.name }}</option>
                             </select>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="flex-r-m flex-w p-t-10">
                         <div class="w-size16 flex-m flex-w">
@@ -105,15 +105,15 @@
         <!-- RELATED PRODUCTS -->
         <section class="relateproduct bgwhite p-t-45 p-b-138">
             <div class="container">
-                <div class="sec-title p-b-60">
+                <!-- <div class="sec-title p-b-60">
                     <h3 class="m-text5 t-center">
                         Related Products
                     </h3>
-                </div>
+                </div> -->
 
                 <v-data-iterator :items="relatedProducts" :rows-per-page-items="rowsPerPageItems" :pagination.sync="pagination" content-tag="v-layout" row wrap>
                     <v-toolbar slot="header" class="mb-2" color="white darken-5" dark flat>
-                        <v-toolbar-title style="color: #000; margin: auto;">New Products</v-toolbar-title>
+                        <v-toolbar-title style="color: #000; margin: auto;">Related Products</v-toolbar-title>
                     </v-toolbar>
                     <v-flex slot="item" slot-scope="props" xs12 sm6 md4 lg3>
 
@@ -162,7 +162,7 @@
                             </v-card-text>
                             <v-divider></v-divider>
                             <div class="text-center" style="background: #f0f0f0;">
-                                <v-btn flat color="orange" @click="redirect(props.item.id)">{{ props.item.name }}</v-btn>
+                                <v-btn flat color="orange" @click="redirect(props.item.id)">{{ props.item.product_name }}</v-btn>
                                 <br>
                                 <div class="row">
                                     <div class="col-6">

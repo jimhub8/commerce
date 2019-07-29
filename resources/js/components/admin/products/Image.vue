@@ -45,14 +45,14 @@
                                 <v-card>
                                     <div class="container">
                                         <div class="large-12 medium-12 small-12 filezone">
-                                            <input type="file" id="files" ref="files" multiple v-on:change="handleFiles()"/>
+                                            <input type="file" id="files" ref="files" multiple v-on:change="handleFiles()" />
                                             <p>
                                                 Drop your files here <br>or click to search
                                             </p>
                                         </div>
 
                                         <div v-for="(file, key) in files" class="file-listing">
-                                            <img class="preview" v-bind:ref="'preview'+parseInt(key)"/>
+                                            <img class="preview" v-bind:ref="'preview'+parseInt(key)" />
                                             {{ file.name }}
                                             <div class="success-container" v-if="file.id > 0">
                                                 Success
@@ -124,6 +124,7 @@ export default {
                     })
                     .then(
                         function (data) {
+                            eventBus.$emit('alertRequest', 'updated')
                             this.loading = false
                             console.log(this.files.length, i);
                             console.log(data);
@@ -208,7 +209,7 @@ export default {
                     this.errors = error.response.data.errors;
                 });
         },
-        removeFile(key) { 
+        removeFile(key) {
             this.files.splice(key, 1);
             this.getImagePreviews();
         },
@@ -225,64 +226,61 @@ export default {
             this.dialog = false;
         },
 
+        onPickFile() {
+            this.$refs.fileInput.click();
+        },
+        onFilePicked(event) {
+            this.imagePlaced = true;
+            const files = event.target.files;
+            let filename = files[0].name;
+            if (filename.lastIndexOf(".") <= 0) {
+                return alert("please upload a valid image");
+            }
+            const fileReader = new FileReader();
+            fileReader.addEventListener("load", () => {
+                this.avatar = fileReader.result;
+            });
+            fileReader.readAsDataURL(files[0]);
+            this.image = files[0];
+        },
+        Getimage(e) {
+            let image = e.target.files[0];
+            // this.read(image);
+            let reader = new FileReader();
+            reader.readAsDataURL(image);
+            reader.onload = e => {
+                this.avatar = e.target.result;
+            };
+            this.imagePlaced = true;
+            let form = new FormData();
+            form.append("image", image);
+            this.file = form;
+            console.log(e.target.files);
+        },
 
+        cancle() {
+            this.avatar = this.product.image;
+            this.imagePlaced = false;
+        },
 
-        
-    onPickFile() {
-      this.$refs.fileInput.click();
-    },
-    onFilePicked(event) {
-      this.imagePlaced = true;
-      const files = event.target.files;
-      let filename = files[0].name;
-      if (filename.lastIndexOf(".") <= 0) {
-        return alert("please upload a valid image");
-      }
-      const fileReader = new FileReader();
-      fileReader.addEventListener("load", () => {
-        this.avatar = fileReader.result;
-      });
-      fileReader.readAsDataURL(files[0]);
-      this.image = files[0];
-    },
-    Getimage(e) {
-      let image = e.target.files[0];
-      // this.read(image);
-      let reader = new FileReader();
-      reader.readAsDataURL(image);
-      reader.onload = e => {
-        this.avatar = e.target.result;
-      };
-      this.imagePlaced = true;
-      let form = new FormData();
-      form.append("image", image);
-      this.file = form;
-      console.log(e.target.files);
-    },
-
-    cancle() {
-      this.avatar = this.product.image;
-      this.imagePlaced = false;
-    },
-
-    upload() {
-      this.loading = true;
-      axios
-        .post(`/proImg/${this.product_id}`, this.file)
-        .then(response => {
-          this.loading = false;
-          // console.log(response);
-          this.imagePlaced = false;
-          this.color = "black";
-          this.text = "Product image updated";
-          this.snackbar = true;
-          // this.close()
-        })
-        .catch(error => {
-          this.loading = false;
-          this.errors = error.response.data.errors;
-        });
-    },
+        upload() {
+            this.loading = true;
+            axios
+                .post(`/proImg/${this.product_id}`, this.file)
+                .then(response => {
+                    this.loading = false;
+                    // console.log(response);
+                    this.imagePlaced = false;
+                    this.color = "black";
+                    this.text = "Product image updated";
+                    this.snackbar = true;
+                    // this.close()
+                })
+                .catch(error => {
+                    this.loading = false;
+                    this.errors = error.response.data.errors;
+                });
+        },
     },
     created() {
         eventBus.$on("imageEvent", data => {

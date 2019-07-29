@@ -13,14 +13,14 @@
             <!-- <v-flex sm12> -->
             <v-form ref="form" @submit.prevent>
                 <div class="large-12 medium-12 small-12 filezone">
-                    <input type="file" id="files" ref="files" multiple v-on:change="handleFiles()"/>
+                    <input type="file" id="files" ref="files" multiple v-on:change="handleFiles()" />
                     <p>
                         Drop your files here <br>or click to search
                     </p>
                 </div>
 
                 <div v-for="(file, key) in files" class="file-listing">
-                    <img class="preview" v-bind:ref="'preview'+parseInt(key)"/>
+                    <img class="preview" v-bind:ref="'preview'+parseInt(key)" />
                     {{ file.name }}
                     <div class="success-container" v-if="file.id > 0">
                         Success
@@ -98,6 +98,12 @@ export default {
                         }.bind(this)
                     )
                     .catch(error => {
+
+                        if (error.response.status === 500) {
+                            eventBus.$emit("errorEvent", error.response.statusText);
+                            this.loading = false;
+                            return;
+                        }
                         console.log(error.response.status);
                         this.loading = false;
 
@@ -111,6 +117,7 @@ export default {
                         // alert('finish2')
                         eventBus.$emit("alertRequest", "Successifully Created");
                         this.getImages();
+                        this.loading = false;
                         this.clear();
                         // this.sendmail()
                         // console.log(response);

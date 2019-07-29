@@ -115,6 +115,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('images', 'ProductimgController');
     Route::resource('variants', 'VariantController');
     Route::resource('sales', 'SaleController');
+    Route::resource('groups', 'GroupController');
 
     Route::get('/logoutOther', 'UserController@logoutOther')->name('logoutOther');
     Route::post('/logOtherDevices', 'UserController@logOtherDevices')->name('logOtherDevices');
@@ -203,5 +204,28 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('pod/{id}', 'ReportController@pod')->name('pod');
 
     Route::post('ProdReport', 'ReportController@ProdReport')->name('ProdReport');
+
+
+    // Unique
+    Route::get('/unique_sku', 'ProductController1@unique_sku')->name('unique_sku');
+    Route::get('/uniquesku_no', 'ProductController1@uniquesku_no')->name('uniquesku_no');
+    Route::post('/product_group', 'ProductController1@product_group')->name('product_group');
+
+
+
+    Route::post('/searchItems/{search}', 'ProductController1@searchItems')->name('searchItems');
+    Route::post('/filterproducts', 'ProductController1@filterproducts')->name('filterproducts');
+    Route::post('/pro_image/{id}', 'ProductController1@pro_image')->name('pro_image');
+    Route::get('/randomSku', 'ProductController1@randomSku')->name('randomSku');
+    Route::post('/filterProd_table', 'ProductController1@filterProd_table')->name('filterProd_table');
+
+
+    Route::post('/activate', 'ProductController1@activate')->name('activate');
+    Route::post('/digital', 'ProductController1@digital')->name('digital');
+    Route::post('/notdigital', 'ProductController1@notdigital')->name('notdigital');
+    Route::post('/dangerous', 'ProductController1@dangerous')->name('dangerous');
+    Route::post('/notdangerous', 'ProductController1@notdangerous')->name('notdangerous');
+    Route::post('/lot', 'ProductController1@lot')->name('lot');
+    Route::post('/notlot', 'ProductController1@notlot')->name('notlot');
 });
 // });

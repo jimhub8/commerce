@@ -59,6 +59,14 @@
                                 <div class="v-list__tile__title">My Products</div>
                             </div>
                         </router-link>
+                        <router-link to="/groups" class="v-list__tile v-list__tile--link" v-if="user.can['view products']">
+                            <div class="v-list__tile__action">
+                                <i aria-hidden="true" class="icon material-icons">folder</i>
+                            </div>
+                            <div class="v-list__tile__content">
+                                <div class="v-list__tile__title">Product Group</div>
+                            </div>
+                        </router-link>
                         <router-link to="/AdminCompany" class="v-list__tile v-list__tile--link" v-if="user.can['view company']">
                             <div class="v-list__tile__action"><i aria-hidden="true" class="icon material-icons">account_circle</i></div>
                             <div class="v-list__tile__content">
@@ -189,7 +197,7 @@ export default {
             csrf: document
                 .querySelector('meta[name="csrf-token"]')
                 .getAttribute("content"),
-            color: "#132f51",
+            color: "rgb(25, 117, 210)",
             dialog: false,
             drawer: true,
             right: null,

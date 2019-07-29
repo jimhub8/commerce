@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VendorMail;
+use Illuminate\Support\Facades\Auth;
 
 class VendorController extends Controller
 {
@@ -20,57 +21,93 @@ class VendorController extends Controller
      */
     public function vendor_user(Request $request)
     {
-        // return  $request->all();
-        $this->Validate($request, [
-            'user_name' => 'required',
-            'user_email' => 'required|email|unique:users,email',
-            'user_phone' => 'required|numeric',
-            'user_address' => 'required',
-            'email' => 'required|email',
-            'company_name' => 'required',
-            'phone' => 'required|numeric',
-            'address' => 'required',
-            // 'phone' => ' numeric',
-            // 'company' => 'required',
-        ]);
+        // return($request->all());
+        $user = new User();
+        $user->name = $request->user_name;
+        $user->email = $request->user_email;
+        $user->phone = $request->user_phone;
+        $user->address = $request->user_address;
+        $password = $this->generateRandomString();
+        $password_hash = Hash::make($password);
+        $user->password = $password_hash;
+        $user->assignRole('Vendor');
+        Mail::send(new VendorMail($user, $password));
+        // $user->notify(new SignupActivate($user, $password));
+        $user->save();
 
         $company = new Company;
+        $company->user_id = (Auth::check()) ? Auth::id() : $user->id();
+        $company->user_name = $request->user_name;
+        $company->user_email = $request->user_email;
+        $company->user_phone = $request->user_phone;
+        $company->user_address = $request->user_address;
         $company->company_name = $request->company_name;
-        $company->email = $request->email;
-        $company->phone = $request->phone;
-        $company->address = $request->address;
-        $company->website = $request->website;
-        $company->active = false;
-        // $company->admin = $request->data['admin']['id'];
-        $company->user_id = 0;
-        if ($company->save()) {
-            // return $request->all();
-            $user = new User;
-            // $password = $request->form['password'];
-            $password = $this->generateRandomString();
-            $password_hash = Hash::make($password);
-            // $user->name = $request->name;
-            $user->password = $password_hash;
-            $user->name = $request->user_name;
-            $user->email = $request->user_email;
-            $user->phone = $request->user_phone;
-            $user->address = $request->user_address;
-            $user->website = $request->user_website;
-            $user->company_id = $company->id;
-            $user->save();
-            $user->assignRole('Store Admin');
-            // $user->givePermissionTo($request->selected);
-            // $user->notify(new SignupActivate($user, $password));
-            // $message = 'a new vendoe';
-            // Mail::send('mail.vendor', function ($message) {
-            //     $message->from('jimlaravel@gmail.com', 'Jimmy');
-            //     $message->sender('jimkiarie8@gmail.com', 'John Doe');
-            //     $message->to('jimlaravel@gmail.com', 'John Doe');
-            //     $message->subject('New vendor');
-            // });
-            Mail::send(new VendorMail($user, $password));
-            return $user;
-        }
+        $company->location = $request->location;
+        $company->company_email = $request->company_email;
+        $company->company_phone = $request->company_phone;
+        $company->company_address = $request->company_address;
+        $company->company_businessno = $request->company_businessno;
+        $company->company_website = $request->company_website;
+        $company->account_no = $request->account_no;
+        $company->account_name = $request->account_name;
+        $company->bank = $request->bank;
+        $company->mpesa_name = $request->mpesa_name;
+        $company->branch = $request->branch;
+        $company->bank_code = $request->bank_code;
+        $company->mpesa_phone = $request->mpesa_phone;
+        $company->save();
+        return $company;
+        // return  $request->all();
+        // $this->Validate($request, [
+        //     'user_name' => 'required',
+        //     'user_email' => 'required|email|unique:users,email',
+        //     'user_phone' => 'required|numeric',
+        //     'user_address' => 'required',
+        //     'email' => 'required|email',
+        //     'company_name' => 'required',
+        //     'phone' => 'required|numeric',
+        //     'address' => 'required',
+        //     // 'phone' => ' numeric',
+        //     // 'company' => 'required',
+        // ]);
+
+        // $company = new Company;
+        // $company->company_name = $request->company_name;
+        // $company->email = $request->email;
+        // $company->phone = $request->phone;
+        // $company->address = $request->address;
+        // $company->website = $request->website;
+        // $company->active = false;
+        // // $company->admin = $request->data['admin']['id'];
+        // $company->user_id = 0;
+        // if ($company->save()) {
+        //     // return $request->all();
+        //     $user = new User;
+        //     // $password = $request->form['password'];
+        //     $password = $this->generateRandomString();
+        //     $password_hash = Hash::make($password);
+        //     // $user->name = $request->name;
+        //     $user->password = $password_hash;
+        //     $user->name = $request->user_name;
+        //     $user->email = $request->user_email;
+        //     $user->phone = $request->user_phone;
+        //     $user->address = $request->user_address;
+        //     $user->website = $request->user_website;
+        //     $user->company_id = $company->id;
+        //     $user->save();
+        //     $user->assignRole('Store Admin');
+        //     // $user->givePermissionTo($request->selected);
+        //     // $user->notify(new SignupActivate($user, $password));
+        //     // $message = 'a new vendoe';
+        //     // Mail::send('mail.vendor', function ($message) {
+        //     //     $message->from('jimlaravel@gmail.com', 'Jimmy');
+        //     //     $message->sender('jimkiarie8@gmail.com', 'John Doe');
+        //     //     $message->to('jimlaravel@gmail.com', 'John Doe');
+        //     //     $message->subject('New vendor');
+        //     // });
+        //     Mail::send(new VendorMail($user, $password));
+        //     return $user;
+        // }
     }
 
     public function generateRandomString($length = 10)

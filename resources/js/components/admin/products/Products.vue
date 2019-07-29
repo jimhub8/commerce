@@ -305,9 +305,6 @@ export default {
         },
 
         editProduct(data) {
-            // this.proEdit = Object.assign({}, task);
-            // this.editedIndex = this.products.indexOf(task);
-            // this.dispEdit = true;
             eventBus.$emit("ProEditEvent", data);
         },
         getProduct() {

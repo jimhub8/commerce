@@ -10,7 +10,7 @@ class AutoGenerate
     {
         $product = Product::select('id')->orderBy('id', 'Desc')->first();
         // $id = ''.str_pad($product->id + 1, 8, "0", STR_PAD_LEFT);
-        $product = ($product) ? 'PRO_' . str_pad($product->id + 1, 8, "0", STR_PAD_LEFT) : 'MFT_' . str_pad(1, 8, "0", STR_PAD_LEFT);
+        $product = ($product) ? 'SKU_' . str_pad($product->id + 1, 8, "0", STR_PAD_LEFT) : 'SKU_' . str_pad(1, 8, "0", STR_PAD_LEFT);
         $validator = \Validator::make(['sku_no' => $product], ['sku_no' => 'unique:products,sku_no']);
         if ($validator->fails()) {
             return $this->randomId();

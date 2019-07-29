@@ -240,8 +240,7 @@
                                 </div>
 
                                 <div class="block2-txt p-t-20">
-                                    <button class="block2-name dis-block s-text3 p-b-5" @click="redirect(product.id)">{{ product.name }}</button>
-
+                                    <button class="block2-name dis-block s-text3 p-b-5" @click="redirect(product.id)">{{ product.product_name }}</button>
                                     <span class="block2-price m-text6 p-r-5">{{ product.price }}</span>
                                 </div>
                             </div>

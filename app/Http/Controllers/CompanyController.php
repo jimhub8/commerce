@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\ApproveVendorMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 
 class CompanyController extends Controller
 {
@@ -52,44 +53,50 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         // return $request->all();
-        $this->validate($request, [
-            'company_name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required|numeric',
-            'address' => 'required',
-        ]);
+        // $this->validate($request, [
+        //     // 'company_name' => 'required',
+        //     // 'email' => 'required|email',
+        //     // 'phone' => 'required|numeric',
+        //     // 'address' => 'required',
+        // ]);
         $company = new Company;
-        // if ($request->location) {
-        //     $location = serialize($request->location);
-        //     // Location
-        //     $loc = $request->location;
-        //     $longitude = $loc['longitude'];
-        //     $latitude = $loc['latitude'];
-        //     $country = $loc['country'];
+        // $company->company_name = $request->company_name;
+        // $company->email = $request->email;
+        // $company->phone = $request->phone;
+        // $company->address = $request->address;
+        // $company->website = $request->website;
+        // $company->active = true;
+        // // $company->admin = $request->data['admin']['id'];
+        $user = new User();
+        $user->name = $request->user_name;
+        $user->email = $request->user_email;
+        $user->phone = $request->user_phone;
+        $user->address = $request->user_address;
+        $password = $this->generateRandomString();
+        $password_hash = Hash::make($password);
+        $user->password = $password_hash;
+        $user->assignRole('Vendor');
+        $user->notify(new SignupActivate($user, $password));
+        $user->save();
 
-        //     if (in_array('administrative_area_level_1', $loc)) {
-        //         $locality = $loc['administrative_area_level_1'];
-        //     } elseif (in_array('locality', $loc)) {
-        //         $locality = $loc['locality'];
-        //     } else {
-        //         $locality = '';
-        //     }
-
-        //     $company->longitude = $longitude;
-        //     $company->latitude = $latitude;
-        //     $company->country = $country;
-        //     $company->locality = $locality;
-        //     $company->location = $location;
-        // }
-        // Location
+        $company->user_id = (Auth::check()) ? Auth::id() : $user->id();
+        $company->user_name = $request->user_name;
+        $company->user_email = $request->user_email;
+        $company->user_phone = $request->user_phone;
+        $company->user_address = $request->user_address;
         $company->company_name = $request->company_name;
-        $company->email = $request->email;
-        $company->phone = $request->phone;
-        $company->address = $request->address;
-        $company->website = $request->website;
-        $company->active = true;
-        // $company->admin = $request->data['admin']['id'];
-        $company->user_id = Auth::id();
+        $company->company_email = $request->company_email;
+        $company->company_phone = $request->company_phone;
+        $company->company_address = $request->company_address;
+        $company->company_businessno = $request->company_businessno;
+        $company->company_website = $request->company_website;
+        $company->account_no = $request->account_no;
+        $company->account_name = $request->account_name;
+        $company->bank = $request->bank;
+        $company->mpesa_name = $request->mpesa_name;
+        $company->branch = $request->branch;
+        $company->bank_code = $request->bank_code;
+        $company->mpesa_phone = $request->mpesa_phone;
         $company->save();
         return $company;
     }
