@@ -171,7 +171,7 @@ export default {
             // if (this.product.has_varients) {
             //     this.product.push(this.form)
             // }
-            axios.patch(`/products/${this.product.id}`, {
+            axios.patch(`/products/${this.$route.params.id}`, {
                 product: this.$data.product,
                 form: this.$data.form,
             }).then((response) => {
@@ -207,7 +207,7 @@ export default {
         upload() {
             // this.loading = true;
             axios
-                .post(`/pro_image/${this.product.id}`, this.file)
+                .post(`/pro_image/${this.$route.params.id}`, this.file)
                 .then(response => {
                     // this.loading = false;
                     this.$store.dispatch('alertEvent', 'Image uploaded')

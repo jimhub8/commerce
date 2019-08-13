@@ -9,7 +9,6 @@ use App\models\WarehouseReceive;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\models\Product_warehouse;
-use App\models\Warehouse;
 use App\models\Product_variants;
 use App\models\Variants;
 use App\models\SubVariant;
@@ -69,19 +68,25 @@ class ProductController1 extends Controller
         // return $request->all();
         $request->validate([
             'product_name' => 'required|unique:products',
-            'client_id' => 'required',
+            // 'client_id' => 'required',
             'sku_no' => 'required|unique:products',
         ]);
         // return $request->all();
         $product = new Product;
         $product->name = $request->product_name;
         $product->product_name = $request->product_name;
+        $product->company_id = Auth::user()->company_id;
         $product->client_id = $request->client_id;
         $product->sku_no = $this->uniqueSku();;
         $product->user_id = Auth::id();
         $product->instructions = 'Product created by ' . Auth::user()->name;
         $product->save();
         return $product;
+    }
+
+    public function show_product($id)
+    {
+        return Product::find($id);
     }
 
     /**
@@ -161,6 +166,8 @@ class ProductController1 extends Controller
         $product->name = $request->product['name'];
         $product->product_name = $request->product['product_name'];
         $product->product_type = $request->product['product_type'];
+        $product->quantity = $request->product['quantity'];
+        $product->onhand = $request->product['onhand'];
         $product->reorder_point = $request->product['reorder_point'];
         $product->tariff_code = $request->product['tariff_code'];
         $product->sku_no = $request->product['sku_no'];
@@ -170,7 +177,6 @@ class ProductController1 extends Controller
         $product->width = $request->product['width'];
         $product->price = $request->product['price'];
         $product->list_price = $request->product['list_price'];
-        $product->qty = $request->product['qty'];
         $product->has_variants = $request->product['has_variants'];
         // dd($product->getDirty());
         $product->instructions = 'Product details updated by ' . Auth::user()->name;

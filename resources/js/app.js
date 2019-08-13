@@ -119,6 +119,8 @@ import myClientOrders from './components/clients/Orders';
 import editProduct from './components/products/Edit.vue'
 
 
+import myCheckout from './components/admin/checkout'
+
 const routes = [
     // { path: '/example', component: exampleComponent },
 
@@ -137,7 +139,7 @@ const routes = [
     { path: '/details/:id', component: productDetail, name: 'details' },
     { path: '/category/:id', component: CategoryFilter, name: 'Category' },
     { path: '/search/:search', component: SearchP, name: 'search' },
-    { path: '/thankyou', component: myThanks },
+    { path: '/thankyou', component: myThanks, name: 'thankyou' },
     { path: '/unauthorized', component: myunauth },
 
     // Admin
@@ -156,6 +158,8 @@ const routes = [
     { path: '/api', component: myApi },
     { path: '/reports', component: myReports },
     { path: '/profile', component: myAccount },
+
+    { path: '/checkout', component: myCheckout, name: 'checkout' },
 
     // Clients
     { path: '/myOrders', component: myClientOrders },
@@ -184,7 +188,7 @@ const app = new Vue({
         myAdminAbout, myAbout, mywishList,myUsers, myRole, CategoryFilter, myAdminCoupon,
         myNavmenu, myAdminSize, myReports, myApi, myAccount, myRegister, myClientOrders,
         myProfile, productDetail, SearchP, myAdminInvoice,myAdminCompany, myMenu, myThanks,
-        myAdmProduct, editProduct, myGroup, myGroupCreate, myGroupShow, myGroupEdit
+        myAdmProduct, editProduct, myGroup, myGroupCreate, myGroupShow, myGroupEdit, myCheckout
         // myslider
 
     },

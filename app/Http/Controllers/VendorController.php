@@ -22,21 +22,8 @@ class VendorController extends Controller
     public function vendor_user(Request $request)
     {
         // return($request->all());
-        $user = new User();
-        $user->name = $request->user_name;
-        $user->email = $request->user_email;
-        $user->phone = $request->user_phone;
-        $user->address = $request->user_address;
-        $password = $this->generateRandomString();
-        $password_hash = Hash::make($password);
-        $user->password = $password_hash;
-        $user->assignRole('Vendor');
-        Mail::send(new VendorMail($user, $password));
-        // $user->notify(new SignupActivate($user, $password));
-        $user->save();
-
         $company = new Company;
-        $company->user_id = (Auth::check()) ? Auth::id() : $user->id();
+        // $company->user_id = (Auth::check()) ? Auth::id() : $user->id;
         $company->user_name = $request->user_name;
         $company->user_email = $request->user_email;
         $company->user_phone = $request->user_phone;
@@ -56,6 +43,20 @@ class VendorController extends Controller
         $company->bank_code = $request->bank_code;
         $company->mpesa_phone = $request->mpesa_phone;
         $company->save();
+        $user = new User();
+        $user->company_id = $company->id;
+        $user->name = $request->user_name;
+        $user->email = $request->user_email;
+        $user->phone = $request->user_phone;
+        $user->address = $request->user_address;
+        $password = $this->generateRandomString();
+        $password_hash = Hash::make($password);
+        $user->password = $password_hash;
+        $user->assignRole('Store Admin');
+        // Mail::send(new VendorMail($user, $password));
+        // $user->notify(new SignupActivate($user, $password));
+        $user->save();
+
         return $company;
         // return  $request->all();
         // $this->Validate($request, [

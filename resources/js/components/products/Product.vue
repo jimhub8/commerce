@@ -151,9 +151,29 @@
                                 </v-tooltip>
                             </div>
                         </span>
+
+                        <span v-else-if="props.column.field == 'carousel'">
+                        <div class="text-xs-right" v-if="props.row.carousel === '1' || props.row.carousel === 1">
+                                <v-tooltip bottom v-if="user.can['update slider products']">
+                                    <v-btn icon class="mx-0" @click="StatusItem(props.row, props.row.carousel, 'carousel', props.row.id)" slot="activator">
+                                        <v-icon color="blue darken-2">check_circle</v-icon>
+                                    </v-btn>
+                                    <span>Remove from Slider</span>
+                                </v-tooltip>
+                            </div>
+                            <div class="text-xs-right" v-else>
+                                <v-tooltip bottom v-if="user.can['update slider products']">
+                                    <v-btn icon class="mx-0" @click="StatusItem(props.row, props.row.carousel, 'carousel', props.row.id)" slot="activator">
+                                        <v-icon color="danger darken-2">block</v-icon>
+                                    </v-btn>
+                                    <span>Display on Slider</span>
+                                </v-tooltip>
+                            </div>
+                        </span>
+
                         <span v-else-if="props.column.field == 'actions'">
                             <v-tooltip bottom v-if="user.can['edit products']">
-                                <v-btn slot="activator" icon class="mx-0" @click="openEdit(props.row)">
+                                <v-btn slot="activator" icon class="mx-0" @click="openEdit(props)">
                                     <v-icon small color="blue darken-2">edit</v-icon>
                                 </v-btn>
                                 <span>Edit</span>
@@ -171,7 +191,7 @@
                                 <span>Update image</span>
                             </v-tooltip>
                             <v-tooltip bottom v-if="user.can['view products']">
-                                <v-btn slot="activator" icon class="mx-0" @click="view(props.row)">
+                                <v-btn slot="activator" icon class="mx-0" @click="view(props)">
                                     <v-icon small color="orange darken-2">visibility</v-icon>
                                 </v-btn>
                                 <span>View Product</span>

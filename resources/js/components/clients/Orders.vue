@@ -6,62 +6,62 @@
                 <v-progress-circular :width="3" indeterminate color="red" style="margin: 1rem"></v-progress-circular>
             </div>
             <v-layout justify-center align-center v-show="!loader">
-                    <v-card>
-                        <v-card-title>
-                            Order
-                            <!-- <v-spacer></v-spacer> -->
-                            <v-tooltip bottom>
-                                <v-btn slot="activator" icon class="mx-0" @click="getOrders">
-                                    <v-icon small color="blue darken-2">refresh</v-icon>
-                                </v-btn>
-                                <span>Refresh</span>
-                            </v-tooltip>
-                            <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
-                        </v-card-title>
-                        <v-data-table :headers="headers" :items="orders.data" class="elevation-1" :search="search" :loading="loading">
-                            <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
-                            <template slot="items" slot-scope="props">
-                                <td>{{ props.item.order_date }}</td>
-                                <td class="text-xs-right">{{ props.item.buyer_name }}</td>
-                                <td class="text-xs-right">{{ props.item.total }}</td>
-                                <td class="text-xs-right">{{ props.item.product_name }}</td>
-                                <!-- <td class="text-xs-right">{{ props.item.name }}</td> -->
-                                <td class="text-xs-right">{{ props.item.quantity }}</td>
-                                <td class="text-xs-right">{{ props.item.status }}</td>
-                                <td class="justify-center layout px-0">
+                <v-card>
+                    <v-card-title>
+                        Order
+                        <!-- <v-spacer></v-spacer> -->
+                        <v-tooltip bottom>
+                            <v-btn slot="activator" icon class="mx-0" @click="getOrders">
+                                <v-icon small color="blue darken-2">refresh</v-icon>
+                            </v-btn>
+                            <span>Refresh</span>
+                        </v-tooltip>
+                        <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
+                    </v-card-title>
+                    <v-data-table :headers="headers" :items="orders.data" class="elevation-1" :search="search" :loading="loading">
+                        <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+                        <template slot="items" slot-scope="props">
+                            <td>{{ props.item.order_date }}</td>
+                            <td class="text-xs-right">{{ props.item.buyer_name }}</td>
+                            <td class="text-xs-right">{{ props.item.total }}</td>
+                            <td class="text-xs-right">{{ props.item.product_name }}</td>
+                            <!-- <td class="text-xs-right">{{ props.item.name }}</td> -->
+                            <td class="text-xs-right">{{ props.item.quantity }}</td>
+                            <td class="text-xs-right">{{ props.item.status }}</td>
+                            <td class="justify-center layout px-0">
+                                <v-tooltip bottom>
+                                    <v-btn slot="activator" icon class="mx-0" @click="view(props.item)">
+                                        <v-icon small color="indigo darken-2">visibility</v-icon>
+                                    </v-btn>
+                                    <span>View Order</span>
+                                </v-tooltip>
+                                <form :action="'/invoice/'+props.item.id" method="get" target="_blank" v-if="user.can['download invoice']">
+                                    <input type="hidden" name="_token" :value="csrf">
+                                    <input type="hidden" name="type" value="stream">
                                     <v-tooltip bottom>
-                                        <v-btn slot="activator" icon class="mx-0" @click="view(props.item)">
-                                            <v-icon small color="indigo darken-2">visibility</v-icon>
+                                        <v-btn flat slot="activator" color="info" icon class="mx-0" type="submit">
+                                            <v-icon>book</v-icon>
                                         </v-btn>
-                                        <span>View Order</span>
+                                        <span>Stream invoice</span>
                                     </v-tooltip>
-                                    <form :action="'/invoice/'+props.item.id" method="get" target="_blank" v-if="user.can['download invoice']">
-                                        <input type="hidden" name="_token" :value="csrf">
-                                        <input type="hidden" name="type" value="stream">
-                                        <v-tooltip bottom>
-                                            <v-btn flat slot="activator" color="info" icon class="mx-0" type="submit">
-                                                <v-icon>book</v-icon>
-                                            </v-btn>
-                                            <span>Stream invoice</span>
-                                        </v-tooltip>
-                                    </form>
-                                    <form :action="'/invoice/'+props.item.id" method="get" v-if="user.can['download invoice']">
-                                        <input type="hidden" name="_token" :value="csrf">
-                                        <input type="hidden" name="type" value="download">
-                                        <v-tooltip bottom>
-                                            <v-btn flat slot="activator" color="primary" icon class="mx-0" type="submit">
-                                                <v-icon>cloud_upload</v-icon>
-                                            </v-btn>
-                                            <span>Download invoice</span>
-                                        </v-tooltip>
-                                    </form>
-                                </td>
-                            </template>
-                            <v-alert slot="no-results" :value="true" color="error" icon="warning">
-                                Your search for "{{ search }}" found no results.
-                            </v-alert>
-                        </v-data-table>
-                    </v-card>
+                                </form>
+                                <form :action="'/invoice/'+props.item.id" method="get" v-if="user.can['download invoice']">
+                                    <input type="hidden" name="_token" :value="csrf">
+                                    <input type="hidden" name="type" value="download">
+                                    <v-tooltip bottom>
+                                        <v-btn flat slot="activator" color="primary" icon class="mx-0" type="submit">
+                                            <v-icon>cloud_upload</v-icon>
+                                        </v-btn>
+                                        <span>Download invoice</span>
+                                    </v-tooltip>
+                                </form>
+                            </td>
+                        </template>
+                        <v-alert slot="no-results" :value="true" color="error" icon="warning">
+                            Your search for "{{ search }}" found no results.
+                        </v-alert>
+                    </v-data-table>
+                </v-card>
             </v-layout>
         </v-container>
         <v-snackbar :timeout="timeout" bottom :color="color" left v-model="snackbar">

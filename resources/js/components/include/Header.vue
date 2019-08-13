@@ -51,22 +51,29 @@
                                 <div class="v-list__tile__title">Subcategories</div>
                             </div>
                         </router-link>
-                        <router-link to="/Adminproducts" class="v-list__tile v-list__tile--link" v-if="user.can['view products']">
-                            <div class="v-list__tile__action">
-                                <i aria-hidden="true" class="icon material-icons">dialpad</i>
-                            </div>
-                            <div class="v-list__tile__content">
-                                <div class="v-list__tile__title">My Products</div>
-                            </div>
-                        </router-link>
-                        <router-link to="/groups" class="v-list__tile v-list__tile--link" v-if="user.can['view products']">
-                            <div class="v-list__tile__action">
-                                <i aria-hidden="true" class="icon material-icons">folder</i>
-                            </div>
-                            <div class="v-list__tile__content">
-                                <div class="v-list__tile__title">Product Group</div>
-                            </div>
-                        </router-link>
+
+                        <v-list-group prepend-icon="account_circle" v-if="user.can['view products']">
+                            <v-list-tile slot="activator">
+                                <v-list-tile-title>Products</v-list-tile-title>
+                            </v-list-tile>
+                            <router-link to="/Adminproducts" class="v-list__tile v-list__tile--link" v-if="user.can['view products']">
+                                <div class="v-list__tile__action">
+                                    <i aria-hidden="true" class="icon material-icons">dialpad</i>
+                                </div>
+                                <div class="v-list__tile__content">
+                                    <div class="v-list__tile__title">My Products</div>
+                                </div>
+                            </router-link>
+                            <router-link to="/groups" class="v-list__tile v-list__tile--link" v-if="user.can['view products']">
+                                <div class="v-list__tile__action">
+                                    <i aria-hidden="true" class="icon material-icons">folder</i>
+                                </div>
+                                <div class="v-list__tile__content">
+                                    <div class="v-list__tile__title">Product With variants</div>
+                                </div>
+                            </router-link>
+                        </v-list-group>
+
                         <router-link to="/AdminCompany" class="v-list__tile v-list__tile--link" v-if="user.can['view company']">
                             <div class="v-list__tile__action"><i aria-hidden="true" class="icon material-icons">account_circle</i></div>
                             <div class="v-list__tile__content">
@@ -152,15 +159,15 @@
                 <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>{{ company.company_name }}
                 <img :src="company.logo" alt="" style="width: 60px; height: 60px; border-radius: 25%;">
             </v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-divider vertical></v-divider>
-                <Notifications :user="user"></Notifications>
-                <Logout :user="user"></Logout>
-                <!-- <a href="/" class="v-btn v-btn--flat theme--dark white--text">Site</a> -->
-                <v-divider vertical></v-divider>
-                <!-- <chattyNoty :user="user"></chattyNoty> -->
-                <!-- <v-icon @click.stop="right = !right" style="cursor: pointer">apps</v-icon> -->
-                <!-- <form action="/logout" method="post">
+            <v-spacer></v-spacer>
+            <v-divider vertical></v-divider>
+            <Notifications :user="user"></Notifications>
+            <Logout :user="user"></Logout>
+            <!-- <a href="/" class="v-btn v-btn--flat theme--dark white--text">Site</a> -->
+            <v-divider vertical></v-divider>
+            <!-- <chattyNoty :user="user"></chattyNoty> -->
+            <!-- <v-icon @click.stop="right = !right" style="cursor: pointer">apps</v-icon> -->
+            <!-- <form action="/logout" method="post">
                 <input type="hidden" name="_token" :value="csrf">
                 <v-btn flat color="white" type="submit">Logout</v-btn>
             </form>

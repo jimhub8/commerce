@@ -24,6 +24,13 @@ class CreateSalesTable extends Migration
             $table->integer('quantity')->nullable();
             $table->integer('total')->nullable();
             $table->string('status')->nullable();
+            $table->string('payment')->nullable();
+            $table->string('client_name')->nullable();
+            $table->string('client_email')->nullable();
+            $table->string('client_phone')->nullable();
+            $table->string('client_address')->nullable();
+            $table->string('client_country')->nullable();
+            $table->string('client_city')->nullable();
             $table->text('cart')->nullable();
             $table->timestamps();
         });

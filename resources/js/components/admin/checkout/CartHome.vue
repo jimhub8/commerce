@@ -1,18 +1,12 @@
 <template>
 <div>
-    <headerP></headerP>
-    <h1 class="text-center">My Shopping Cart</h1>
-    <v-divider></v-divider>
-    <div v-show="loader" style="text-align: center; width: 100%; margin-top: 200px;">
-        <v-progress-circular :width="3" indeterminate color="red" style="margin: 1rem"></v-progress-circular>
-    </div>
-    <v-tooltip bottom>
-        <v-btn slot="activator" icon class="mx-0" @click="getCartProduct">
-            <v-icon small color="orange darken-2">refresh</v-icon>
-        </v-btn>
-        <span>Cart</span>
-    </v-tooltip>
-    <section class="cart bgwhite p-t-70 p-b-100" v-show="!loader">
+    <section class="cart bgwhite p-t-70 p-b-100">
+            <v-tooltip bottom>
+                <v-btn slot="activator" icon class="mx-0" @click="getCartProduct">
+                    <v-icon small color="orange darken-2">refresh</v-icon>
+                </v-btn>
+                <span>Cart</span>
+            </v-tooltip>
         <div class="container" v-if="carts.length > 0">
             <!-- Cart item -->
 
@@ -70,7 +64,6 @@
             <!-- Total -->
             <div class="bo9 w-size18 p-l-40 p-r-40 p-t-30 p-b-38 m-t-30 m-r-0 m-l-auto p-lr-15-sm">
                 <h5 class="m-text20 p-b-24">Cart Totals</h5>
-
                 <!--  -->
                 <div class="flex-w flex-sb-m p-b-12">
                     <span class="s-text18 w-size19 w-full-sm">Subtotal:</span>
@@ -85,14 +78,22 @@
 
                 <!--  -->
                 <hr>
-
                 <!--  -->
                 <div class="flex-w flex-sb-m p-t-26 p-b-30">
                     <span class="m-text22 w-size19 w-full-sm">Total:</span>
 
                     <span class="m-text21 w-size20 w-full-sm">KSH {{ getSubTotal - getCouponT }}</span>
                 </div>
-                <button style="height: 44px;" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4" @click="goToCheckout">Proceed to Checkout</button>
+
+                <div class="size15 trans-0-4">
+                    <!-- Button -->
+                    <form action="/createpayment" method="post" ref="paypal" v-if="account.payment === 'Paypal'">
+                        <input type="hidden" name="_token" :value="csrf">
+                        <button type="submit" style="height: 44px;" class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">Place Order</button>
+                    </form>
+                    <v-btn flat color="primary" @click="cash_delivery" v-else-if="account.payment === 'M-pesa'">Place Order</v-btn>
+                    <v-btn flat color="primary" @click="cash_delivery" v-else>Place Order</v-btn>
+                </div>
             </div>
         </div>
         <div v-else style="background: #f0f0f0;">
@@ -112,11 +113,8 @@
 </template>
 
 <script>
-import headerP from "../include/Headerpartial";
 export default {
-    components: {
-        headerP
-    },
+    props: ['account'],
     data() {
         return {
             csrf: document
@@ -150,12 +148,13 @@ export default {
         },
         cash_delivery() {
             eventBus.$emit("progressEvent");
-            this.form.total = parseInt(this.getSubTotal) - parseInt(this.getCouponT)
-            axios.post('cash_delivery', this.form)
+            this.account.total = parseInt(this.getSubTotal) - parseInt(this.getCouponT)
+            axios.post('cash_delivery', this.account)
                 .then(response => {
                     eventBus.$emit("StoprogEvent");
-                    // eventBus.$emit("cartEvent", response.data);
-                    eventBus.$emit("alertRequest", "Order added");
+                    eventBus.$emit("cartEvent", response.data);
+                    eventBus.$emit("alertRequest", "Order placed");
+                    // this.goToCheckout()
                     // this.carts = response.data;
                     // this.message = "added";
                     // this.snackbar = true;
@@ -166,9 +165,11 @@ export default {
                     this.errors = error.response.data.errors;
                 });
         },
-        mpesa() {
-
-        },
+                    goToCheckout() {
+                        this.$router.push({
+                            name: "thankyou"
+                        });
+                    },
         flashCart(cart) {
             eventBus.$emit("progressEvent");
             // eventBus.$emit("loadingRequest");
@@ -262,11 +263,6 @@ export default {
                     eventBus.$emit("StoprogEvent");
                     this.errors = error.response.data.errors;
                 });
-        },
-        goToCheckout() {
-            this.$router.push({
-                name: "checkout"
-            });
         }
     },
     mounted() {
@@ -279,9 +275,10 @@ export default {
             this.carts = data;
             this.cartAdd = true;
         });
-        // eventBus.$on("flashEvent", data => {
-        //   this.flashCart(data)
-        // });
+
+        eventBus.$on("paypalEvent", data => {
+            this.$refs.paypal.submit()
+        });
     },
     computed: {
         getSubTotal() {

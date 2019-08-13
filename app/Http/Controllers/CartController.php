@@ -28,6 +28,7 @@ class CartController extends Controller
                 $price = $value['price'];
             }
         }
+        // dd($qty, $quantity);
         if ($qty > $quantity) {
             return response()->json(['errors' => "Only " . $quantity . " items are available, you already have " . $quantity . " in your cart", 'status' => '200'], '200');
         }

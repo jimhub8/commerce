@@ -288,7 +288,7 @@ export default {
       this.proId = this.$route.params.id;
       eventBus.$emit("progressEvent");
       axios
-        .get(`/products/${this.proId}`)
+        .get(`/show_product/${this.proId}`)
         .then(response => {
           eventBus.$emit("ScollEvent");
           eventBus.$emit("StoprogEvent");

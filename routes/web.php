@@ -101,6 +101,9 @@ Route::get('catLimit', 'CategoryController@catLimit')->name('catLimit');
 
 Route::get('subcategory/{id}', 'SupCategoryController@subcategory')->name('subcategory');
 
+
+Route::get('show_product/{id}', 'ProductController1@show_product')->name('show_product');
+
 // Auth::routes();
 // Route::group(['middleware' => ['verified']], function () {
 Route::group(['middleware' => ['auth']], function () {

@@ -36,8 +36,6 @@ class CreateProductsTable extends Migration
             $table->text('details')->nullable();
 
 
-
-
             $table->integer('user_id');
             $table->integer('client_id')->nullable();
             $table->string('product_name');

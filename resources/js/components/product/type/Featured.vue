@@ -24,7 +24,7 @@
 
                             <!-- <div class="after">This is some content</div> -->
                             <div class="caption after text-center" :class="{'selected': isSelected(props.item.id)}">
-                                <v-btn color="primary" flat style="margin: auto;">{{ props.item.name }}</v-btn> 
+                                <v-btn color="primary" flat style="margin: auto;">{{ props.item.name }}</v-btn>
                                 <div id="tooltip">
                                     <v-tooltip bottom class data-wow-delay="0.4s">
                                         <v-btn icon class="mx-0" slot="activator" @click="view(props.item)" style="margin-top: 60px;">
@@ -51,7 +51,7 @@
                 </v-card-text>
                 <v-divider></v-divider>
                 <div class="text-center" style="background: #f0f0f0;">
-                    <v-btn flat color="orange" @click="redirect(props.item.id)">{{ props.item.name }}</v-btn>
+                    <v-btn flat color="orange" @click="redirect(props.item.id)">{{ props.item.product_name }}</v-btn>
                     <br>
                     <div class="row">
                         <div class="col-6">

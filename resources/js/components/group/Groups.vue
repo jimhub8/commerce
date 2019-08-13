@@ -15,7 +15,7 @@
                                 <span>Refresh</span>
                             </v-tooltip>
                             <v-spacer></v-spacer>
-                            <v-btn flat color="primary" @click="openCreate">Add Group</v-btn>
+                            <v-btn flat color="primary" @click="openCreate">Add Product</v-btn>
                             <!-- <v-btn flat color="primary" @click="openEdit(selected)">Edit</v-btn> -->
                         </v-card-title>
                         <vue-good-table class="table-hover" :columns="columns" :rows="groups.data" :search-options="{ enabled: true }" :pagination-options="{enabled: true,mode: 'pages'}" :sort-options="{enabled: true, initialSortBy: {field: 'name', type: 'asc'}}" v-loading="isLoading" @on-row-dblclick="openProducts">

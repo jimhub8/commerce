@@ -10,10 +10,6 @@
                     <el-input placeholder="Product name*" v-model="product.product_name"></el-input>
                 </v-flex>
                 <v-flex xs12 sm3 offset-sm1 style="padding: 7px 0;">
-                    <label for="" style="color: #52627d;">MFT ID</label>
-                    <el-input placeholder="MFT ID" disabled v-model="product.id"></el-input>
-                </v-flex>
-                <v-flex xs12 sm3 offset-sm1 style="padding: 7px 0;">
                     <label for="" style="color: #52627d;">Platform Source</label>
                     <el-input placeholder="Platform Source" disabled v-model="product.platform"></el-input>
                 </v-flex>
@@ -47,7 +43,7 @@
                 </v-flex>
                 <v-flex xs12 sm5 offset-sm1 style="padding: 7px 0;">
                     <label for="" style="color: #52627d;">Qty Available</label>
-                    <el-input placeholder="available" min="0" type="number" v-model="product.qty"></el-input>
+                    <el-input placeholder="available" min="0" type="number" v-model="product.quantity"></el-input>
                 </v-flex>
                 <v-flex xs12 sm5 offset-sm1 style="padding: 7px 0;">
                     <label for="" style="color: #52627d;">Price</label>

@@ -191,7 +191,7 @@ class PaymentController extends Controller
         $cart = $this->getCart();
         $this->getCartProduct();
         $user = Auth::user();
-        $this->sales();
+        $this->sales('Payed');
         Notification::send($user, new OrderNotification($order, $cart));
         if ($order->save()) {
             $request->session()->forget('cart');
@@ -228,15 +228,17 @@ class PaymentController extends Controller
         $cart = $this->getCart();
         $this->getCartProduct();
         $user = Auth::user();
-        $this->sales('Unconfirmed');
+        $this->sales('Unconfirmed', $request->all());
         Notification::send($user, new OrderNotification($order, $cart));
         if ($order->save()) {
             $request->session()->forget('cart');
         }
-        return redirect('/#/thankyou');
+        return $this->returngetCart();
+        // return redirect('/#/thankyou');
     }
-    public function sales($status)
+    public function sales($status, $account)
     {
+        // dd($account['payment']);
         $cart = $this->getCart();
         // dd($cart);
         foreach ($cart as $product) {
@@ -249,6 +251,13 @@ class PaymentController extends Controller
             $sales->quantity = $product['qty'];
             $sales->total = $product['price'];
             $sales->status = $status;
+            $sales->client_name = $account['name'];
+            $sales->client_email = $account['email'];
+            $sales->client_phone = $account['phone'];
+            $sales->client_address = $account['address'];
+            $sales->client_city = $account['city'];
+            $sales->client_country = $account['country'];
+            $sales->payment = $account['payment'];
             $sales->product_name = $product['item']['name'];
             $sales->cart = serialize(Product::find($product['item']['id']));
             $sales->save();
@@ -267,6 +276,27 @@ class PaymentController extends Controller
         // }
         return $carts;
     }
+    public function returngetCart()
+    {
+        // dd(Session::get('cart'));
+        if (Session::has('cart')) {
+            $carts = Session::get('cart');
+            $cartA = [];
+            foreach ($carts->items as $itemsC) {
+                $cartA[] = $itemsC;
+            }
+            return ($cartA);
+            $oldCart = Session::has('cart') ? Session::get('cart') : null;
+            $cart = new Cart($oldCart);
+            return $cart->getCart();
+        } else {
+            return;
+        }
+
+        // Get Total if coupons
+
+    }
+
 
     public function getCartProduct()
     {

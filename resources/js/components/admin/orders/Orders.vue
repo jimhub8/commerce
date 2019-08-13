@@ -24,7 +24,10 @@
                             <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
                             <template slot="items" slot-scope="props">
                                 <td>{{ props.item.created_at }}</td>
-                                <td class="text-xs-right">{{ props.item.buyer_name }}</td>
+                                <td class="text-xs-right">{{ props.item.client_name }}</td>
+                                <td class="text-xs-right">{{ props.item.client_email }}</td>
+                                <td class="text-xs-right">{{ props.item.client_phone }}</td>
+                                <td class="text-xs-right">{{ props.item.client_address }}</td>
                                 <td class="text-xs-right">{{ props.item.total }}</td>
                                 <td class="text-xs-right">{{ props.item.product_name }}</td>
                                 <!-- <td class="text-xs-right">{{ props.item.name }}</td> -->
@@ -133,7 +136,22 @@ export default {
                 {
                     text: "Client Name",
                     align: "left",
-                    value: "buyer_name"
+                    value: "client_name"
+                },
+                {
+                    text: "Client Email",
+                    align: "left",
+                    value: "client_email"
+                },
+                {
+                    text: "Client phone",
+                    align: "left",
+                    value: "client_phone"
+                },
+                {
+                    text: "Client address",
+                    align: "left",
+                    value: "client_address"
                 },
                 {
                     text: "Amount",
@@ -265,3 +283,10 @@ export default {
     }
 };
 </script>
+
+
+<style scoped>
+.theme--light.v-sheet {
+    width: 100% !important;
+}
+</style>

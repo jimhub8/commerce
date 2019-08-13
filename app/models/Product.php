@@ -48,7 +48,9 @@ class Product extends Model
     {
         // dd(Auth::user()->hasRole('Admin'));
         if (!Auth::user()->hasRole('Admin')) {
-            return $query->where('user_id', Auth::id());
+            // return $query->where('user_id', Auth::id());
+            return $query->where('company_id',  Auth::user()->company_id);
+
         }
     }
 

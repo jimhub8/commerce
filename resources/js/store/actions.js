@@ -358,7 +358,7 @@ export default {
     },
     product_warehouse(context, payload) {
         context.commit('loading', true)
-        axios.get(`/product_warehouse/${payload}`)
+        axios.get(`/products/${payload}`)
             .then((response) => {
                 context.commit('updateproduct_warehouseList', response.data)
                 context.commit('loading', false)

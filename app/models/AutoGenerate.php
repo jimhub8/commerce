@@ -22,7 +22,7 @@ class AutoGenerate
     {
         $product = Order::select('id')->orderBy('id', 'Desc')->first();
         // $id = ''.str_pad($product->id + 1, 8, "0", STR_PAD_LEFT);
-        $product = ($product) ? 'PAYID-' . str_pad($product->id + 1, 8, "0", STR_PAD_LEFT) : 'MFT_' . str_pad(1, 8, "0", STR_PAD_LEFT);
+        $product = ($product) ? 'PAYID-' . str_pad($product->id + 1, 8, "0", STR_PAD_LEFT) : 'DEL_' . str_pad(1, 8, "0", STR_PAD_LEFT);
         $validator = \Validator::make(['payment_id' => $product], ['payment_id' => 'unique:orders,payment_id']);
         if ($validator->fails()) {
             return $this->randomId();
@@ -34,7 +34,7 @@ class AutoGenerate
     {
         $returns = ReturnOrder::select('id')->orderBy('id', 'Desc')->first();
         // $id = ''.str_pad($product->id + 1, 8, "0", STR_PAD_LEFT);
-        $returns = ($returns) ? 'RTN_' . str_pad($returns->id + 1, 8, "0", STR_PAD_LEFT) : 'MFT_' . str_pad(1, 8, "0", STR_PAD_LEFT);
+        $returns = ($returns) ? 'RTN_' . str_pad($returns->id + 1, 8, "0", STR_PAD_LEFT) : 'DEL_' . str_pad(1, 8, "0", STR_PAD_LEFT);
         // dd($returns);
         $validator = \Validator::make(['return_id' => $returns], ['return_id' => 'unique:return_orders,return_id']);
         if ($validator->fails()) {
@@ -47,7 +47,7 @@ class AutoGenerate
     {
         $invoices = Invoice::select('id')->orderBy('id', 'Desc')->first();
         // $id = ''.str_pad($product->id + 1, 8, "0", STR_PAD_LEFT);
-        $invoices = ($invoices) ? 'INV_' . str_pad($invoices->id + 1, 8, "0", STR_PAD_LEFT) : 'MFT_' . str_pad(1, 8, "0", STR_PAD_LEFT);
+        $invoices = ($invoices) ? 'INV_' . str_pad($invoices->id + 1, 8, "0", STR_PAD_LEFT) : 'DEL_' . str_pad(1, 8, "0", STR_PAD_LEFT);
         $validator = \Validator::make(['return_id' => $invoices], ['return_id' => 'unique:invoices,return_id']);
         if ($validator->fails()) {
             return $this->randomId();

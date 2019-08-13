@@ -18,7 +18,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        return Group::paginate(500);
+        return Group::where('company_id',  Auth::user()->company_id)->paginate(500);
     }
 
     /**
@@ -35,6 +35,7 @@ class GroupController extends Controller
         $group->unit = $request->units;
         $group->user_id = Auth::id();
         $group->description = $request->description;
+        $group->company_id = Auth::user()->company_id;
         $group->save();
         // $product->save();
         foreach ($request->itemAttribute_arr as $key => $value) {
@@ -50,6 +51,7 @@ class GroupController extends Controller
             $product->reorder_point = $value['reorder_point'];
             $product->user_id = Auth::id();
             $product->has_variants = true;
+            $product->company_id = Auth::user()->company_id;
             $product->instructions = 'Product created by ' . Auth::user()->name;
             $product->save();
             // $product = new Product();
@@ -82,7 +84,7 @@ class GroupController extends Controller
     public function show($id)
     {
         return $groups = Group::with('variants')->find($id);
-        return array_flatten($groups->products);
+        // return array_flatten($groups->products);
         // $groups->transform(function($group) {
         //     // dd($group->products);
         //     // $group->products->transform()

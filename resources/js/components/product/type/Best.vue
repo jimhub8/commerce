@@ -24,7 +24,7 @@
 
                             <!-- <div class="after">This is some content</div> -->
                             <div class="caption after text-center  trans-0-4" :class="{'selected': isSelected(props.item.id)}">
-                                <v-btn color="primary" flat style="margin: auto;">{{ props.item.name }}</v-btn> 
+                                <v-btn color="primary" flat style="margin: auto;">{{ props.item.name }}</v-btn>
                                 <div id="tooltip">
                                     <v-tooltip bottom data-wow-delay="0.4s" class="trans-0-4">
                                         <v-btn icon class="mx-0" slot="activator" @click="view(props.item)" style="margin-top: 60px;">
@@ -37,7 +37,7 @@
                                             <v-icon color="success darken-2" small>favorite</v-icon>
                                         </v-btn>
                                         <span>Wish list</span>
-                                    </v-tooltip> 
+                                    </v-tooltip>
                                     <v-tooltip bottom class="trans-0-4" data-wow-delay="1.2s">
                                         <v-btn icon class="mx-0" slot="activator" @click="addToCart(props.item.id)" style="margin-top: 60px;">
                                             <v-icon color="orange darken-2" small>shopping_cart</v-icon>
@@ -51,7 +51,7 @@
                 </v-card-text>
                 <v-divider></v-divider>
                 <div class="text-center" style="background: #f0f0f0;">
-                    <v-btn flat color="orange" @click="redirect(props.item.id)">{{ props.item.name }}</v-btn>
+                    <v-btn flat color="orange" @click="redirect(props.item.id)">{{ props.item.product_name }}</v-btn>
                     <br>
                     <div class="row">
                         <div class="col-6">
